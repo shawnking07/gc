@@ -23,6 +23,7 @@
 #define GC_SUCCESS 0
 #define GC_FAILED -1
 #define GC_CONFIG_PATH "/sys/kernel/config"
+#define GC_NAME "g1"
 
 typedef enum {
     USB_HOST,

@@ -78,11 +78,10 @@ usbg_gadget * gc_procon_init(gc_generic_info info)
         return NULL;
     }
 
-    /* Now we just support one otg controller */
-    /* if one gadget been created just use it */
-    g = usbg_get_first_gadget(state);
+    /* Another gadget named procon */
+    g = usbg_get_gadget(state, "procon");
     if(g == NULL){
-        usbg_ret = usbg_create_gadget(state, "g1", &g_attrs, &g_strs, &g);
+        usbg_ret = usbg_create_gadget(state, "procon", &g_attrs, &g_strs, &g);
         if (usbg_ret != USBG_SUCCESS) {
             fprintf(stderr,"failed to create gadget. \n");
             state = NULL;

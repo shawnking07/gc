@@ -59,9 +59,9 @@ usbg_gadget * gc_init(gc_generic_info info)
 
     /* Now we just support one otg controller */
     /* if one gadget been created just use it */
-    g = usbg_get_first_gadget(state);
+    g = usbg_get_gadget(state, GC_NAME);
     if(g == NULL){
-        usbg_ret = usbg_create_gadget(state, "g1", &g_attrs, &g_strs, &g);
+        usbg_ret = usbg_create_gadget(state, GC_NAME, &g_attrs, &g_strs, &g);
         if (usbg_ret != USBG_SUCCESS) {
             fprintf(stderr,"failed to create gadget. \n");
             state = NULL;
@@ -79,7 +79,7 @@ int gc_delete_function(gc_generic_info info,char *target)
 {
     usbg_gadget *g;
     gc_init(info);
-    g = usbg_get_first_gadget(state);
+    g = usbg_get_gadget(state, GC_NAME);
     if(g == NULL || target == NULL)
         return GC_FAILED;
 
@@ -128,7 +128,7 @@ int gc_enable_gadget(gc_generic_info info)
     if(gc_init(info) == NULL)
         return GC_FAILED;
     usbg_gadget *g;
-    g = usbg_get_first_gadget(state);
+    g = usbg_get_gadget(state, GC_NAME);
     if(usbg_enable_gadget(g, DEFAULT_UDC) != USBG_SUCCESS){
         fprintf(stderr,"failed to enable gadget! \n");
         gc_clean();
@@ -143,7 +143,7 @@ int gc_disable_gadget(gc_generic_info info)
     if(gc_init(info) == NULL)
         return GC_FAILED;
     usbg_gadget *g;
-    g = usbg_get_first_gadget(state);
+    g = usbg_get_gadget(state, GC_NAME);
     usbg_disable_gadget(g);
 
     return GC_SUCCESS;
@@ -156,7 +156,7 @@ static int gc_get_functions()
     if(state == NULL)
         return -1;
 
-    usbg_gadget *gadget = usbg_get_first_gadget(state);
+    usbg_gadget *gadget = usbg_get_gadget(state, GC_NAME);
 
     if(gadget == NULL)
         return -1;
