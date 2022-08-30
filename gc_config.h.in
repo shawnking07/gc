@@ -25,11 +25,11 @@
 #endif
 
 #ifndef MANUFACTURER
-#define MANUFACTURER "HandsomeTech"
+#define MANUFACTURER "SK-Product"
 #endif
 
 #ifndef PRODUCT
-#define PRODUCT "HandsomeMod Device"
+#define PRODUCT "SK Device"
 #endif
 
 #ifndef ID_VENDOR

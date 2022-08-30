@@ -29,6 +29,7 @@
 #include "gc_list.h"
 #include "gc_ecm.h"
 #include "gc_acm.h"
+#include "gc_procon.h"
 
 static int is_root(){
     if(getuid() == 0){
@@ -65,6 +66,13 @@ int main(int argc,char *argv[])
     info.product = PRODUCT;
     info.serial_number = SERIAL_NUMBER;
 
+    gc_generic_info nintendo_pro_controller_info;
+    nintendo_pro_controller_info.id_product = strtoul("0x2009",0,16);
+    nintendo_pro_controller_info.id_vendor = strtoul("0x057e",0,16);
+    nintendo_pro_controller_info.manufacturer = "Nintendo Co., Ltd.";
+    nintendo_pro_controller_info.product = "Nintendo Pro Controller";
+    nintendo_pro_controller_info.serial_number = "000000000001";
+
     /* deal with args */
     if(strcmp(argv[1],"-h") == 0) {
         /* help */
@@ -74,10 +82,23 @@ int main(int argc,char *argv[])
         gc_show_list();
     } else if(strcmp(argv[1],"-e") == 0) {
         /* enable gadget functions */
-        gc_enable_gadget(info);
+        if (argc < 3) {
+            /* normal gadget */
+            gc_enable_gadget(info);
+        } else if (strcmp(argv[2],"procon") == 0) {
+            /* nintendo pro controller gadget */
+            gc_enable_gadget(nintendo_pro_controller_info);
+            gc_procon_create(argc, argv, nintendo_pro_controller_info);
+        }
     } else if(strcmp(argv[1],"-d") == 0) {
         /* disable gadget functions */
-        gc_disable_gadget(info);
+        if (argc < 3) {
+            /* normal gadget */
+            gc_disable_gadget(info);
+        } else if (strcmp(argv[2],"procon") == 0) {
+            /* nintendo pro controller gadget */
+            gc_disable_gadget(nintendo_pro_controller_info);
+        }
     } else if(strcmp(argv[1],"-a") == 0) {
         /* add a gadget function */
         if(!is_root()){
