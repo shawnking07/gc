@@ -164,7 +164,8 @@ int main(int argc,char *argv[])
             return -1;
         }
 
-        if(gc_remove_all_gadgets(info) != GC_SUCCESS) {
+        if (gc_remove_all_gadgets(info) != GC_SUCCESS ||
+            gc_remove_all_gadgets(nintendo_pro_controller_info) != GC_SUCCESS) {
             fprintf(stderr,"failed to remove all gadgets. \n");
             return -1;
         }
